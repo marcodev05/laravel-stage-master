@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -58,21 +58,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-
-        $request ->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'quantity' => 'required',
-            'description' => 'required',
-        ]);
-
         Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'quantity' => $request->quantity
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'quantity' => $request->input('quantity'),
         ]);
         return redirect()->back()->with('message-success', 'Product added with success !');
     }
@@ -118,19 +110,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreProductRequest $request, Product $product)
     {
-       // $product = Product::findOrFail($request->id);
-        $request ->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'quantity' => 'required',
-            'description' => 'required',
-        ]);
-        
-        $product->update($request->all());
+        $product->update($request->only(['name', 'description', 'price', 'quantity'])); 
         return redirect('/products')->with('message-success', 'Le produit à été mise à jour');
-
     }
 
 
