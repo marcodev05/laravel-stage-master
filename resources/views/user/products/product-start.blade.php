@@ -23,8 +23,10 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <a href="{{ Route('products.show', $product->id)}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                    <form action="" method="post">
-                        <input type="hidden" name="name">
+                    <form action="{{ Route('carts.store')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="order_quantity" value="1">
                        <a href=""><i class="fas fa-shopping-cart text-primary mr-1"></i><button class="btn btn-sm text-dark p-0" type="submit">Add To Cart</button></a>
                     </form>
                     {{-- <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a> --}}

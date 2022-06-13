@@ -27,14 +27,15 @@ Route::get('/home', [HomeController::class, 'homeview'] );
 
 Route::get('/add_product', [AdminController::class, 'addProductView'] );
 
+Route::resource('products', ProductController::class);
+
 Route::get('/edit_product/{id}', [AdminController::class, 'editProductView'] );
 
-
-Route::resource('products', ProductController::class);
+Route::delete('/delete_ordeline/{orderline}', [CartController::class, 'deleteOrderLine'] )->name('orderline.delete');
 
 Route::resource('carts', CartController::class);
 
-
+Route::get('/checkout', [CartController::class, 'checkout']);
 
 Route::middleware([
     'auth:sanctum',
